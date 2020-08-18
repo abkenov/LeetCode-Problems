@@ -1,0 +1,22 @@
+class Solution:
+    def isIsomorphic(self, s: str, t: str) -> bool:
+        
+        dict_of_chars_s = {}
+        dict_of_chars_t = {}
+        
+        for i in range(len(s)):
+            if s[i] in dict_of_chars_s:
+                dict_of_chars_s[s[i]] += i
+            else:
+                dict_of_chars_s[s[i]] = i
+                
+        for i in range(len(t)):
+            if t[i] in dict_of_chars_t:
+                dict_of_chars_t[t[i]] += i
+            else:
+                dict_of_chars_t[t[i]] = i
+        
+        if list(dict_of_chars_s.values()) != list(dict_of_chars_t.values()):
+            return False
+            
+        return True
