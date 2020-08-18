@@ -1,0 +1,20 @@
+class Solution:
+    def arrayNesting(self, nums: List[int]) -> int:
+        
+        result = 0
+        visited = set()
+        
+        for i in range(len(nums)):
+            
+            candidate = nums[i]
+            count = 0
+            
+            while candidate not in visited:
+                
+                visited.add(candidate)
+                candidate = nums[candidate]
+                count += 1
+                
+            result = max(result, count)
+            
+        return result
