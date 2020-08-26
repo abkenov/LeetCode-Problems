@@ -1,0 +1,46 @@
+class Solution {
+public:
+    bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t) {
+        
+        map<int, int> current_window;
+        queue<map<int, int>::iterator> iterators;
+        
+        for(int i = 0; i < nums.size(); i++){
+            if(i > k){
+                current_window.erase(iterators.front());
+                iterators.pop();
+            }
+            
+            auto res = current_window.emplace(nums[i], i);
+            iterators.push(res.first);
+            
+            // res<iterator<key, value>, bool>
+            
+            if(res.second){
+                if(res.first != current_window.begin()){
+                    auto pred = res.first;
+                    --pred;
+                    
+                    if(abs((long int)nums[i] - pred->first) <= t){
+                        return true;
+                    }
+                }
+                
+                auto succ = res.first;
+                ++succ;
+
+                if(succ != current_window.end()){
+                    if(abs((long int)succ->first - nums[i]) <= t){
+                        return true;
+                    }
+                }
+            }else{
+                if(t >= 0){
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+};
